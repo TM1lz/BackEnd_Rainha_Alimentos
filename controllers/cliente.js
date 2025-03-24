@@ -1,14 +1,13 @@
-const Client = require('../models/cliente');
+const Client = require("../models/cliente"); // Importa o modelo do cliente
 
 const clienteController = {
-
-  // Cria o formulário que foi mandado pelo cliente
+  // Cria o cliente
   create: async (req, res) => {
     try {
       const { razaoSocial, cpfCnpj, nome, cidade, email, telefone, mensagem } = req.body;
 
       // Cria um novo cliente
-      const newClient = await Client({
+      const newClient = new Client({
         razaoSocial,
         cpfCnpj,
         nome,
@@ -17,16 +16,16 @@ const clienteController = {
         telefone,
         mensagem,
       });
+
       await newClient.save(); // Salva o cliente no banco de dados
 
       res.status(201).json({ message: 'Cliente criado com sucesso', client: newClient });
     } catch (error) {
-      console.error("Erro ao criar cliente:", error); // Log do erro
-      res.status(500).json({ error: error.message || 'Erro ao criar cliente' }); // Passa a mensagem de erro para o cliente
+      console.error("Erro ao criar cliente:", error);
+      res.status(500).json({ message: 'Erro ao criar cliente', error: error.message || error });
     }
   },
-
-  // Lê o formulário enviado pelo cliente, mas apenas administradores terão acesso
+  // Lê os dados do cliente
   read: async (req, res) => {
     try {
       // Sua lógica para ler os dados do cliente
@@ -35,7 +34,7 @@ const clienteController = {
     }
   },
 
-  // Atualiza o formulário enviado pelo cliente, mas apenas administradores terão acesso
+  // Atualiza os dados do cliente
   update: async (req, res) => {
     try {
       // Sua lógica para atualizar os dados do cliente
@@ -44,7 +43,7 @@ const clienteController = {
     }
   },
 
-  // Deleta o formulário enviado pelo cliente, mas apenas administradores terão acesso
+  // Deleta o cliente
   delete: async (req, res) => {
     try {
       // Sua lógica para deletar o cliente
@@ -54,5 +53,4 @@ const clienteController = {
   }
 };
 
-// Correção aqui: use module.exports para exportar o controller
-module.exports = clienteController;
+module.exports = clienteController; // Certifique-se de exportar corretamente
