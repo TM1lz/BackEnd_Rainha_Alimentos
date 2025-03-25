@@ -19,7 +19,8 @@ const authenticateToken = (req, res, next) => {
 
 // Middleware para garantir que apenas administradores podem acessar as rotas
 const authorizeAdmin = (req, res, next) => {
-  if (req.user.role !== 'admin') {
+  console.log(req.user);
+  if (req.user.role !== 'user') {
     return res.status(403).json({ error: 'Acesso restrito, apenas administradores' });
   }
   next();

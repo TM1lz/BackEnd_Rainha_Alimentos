@@ -25,11 +25,24 @@ const clienteController = {
       res.status(500).json({ message: 'Erro ao criar cliente', error: error.message || error });
     }
   },
-  // Lê os dados do cliente
+
+  // Lê os dados de todos os clientes ou de um cliente específico
   read: async (req, res) => {
     try {
-      // Sua lógica para ler os dados do cliente
+      const { id } = req.params;
+      
+      if (id) {
+        const client = await Client.findById(id);
+        if (!client) {
+          return res.status(404).json({ error: "Cliente não encontrado" });
+        }
+        return res.json(client);
+      }
+
+      const clients = await Client.find();
+      res.json(clients);
     } catch (error) {
+      console.error("Erro ao ler dados do cliente:", error);
       res.status(500).json({ error: "Erro ao ler dados do cliente" });
     }
   },
@@ -37,8 +50,16 @@ const clienteController = {
   // Atualiza os dados do cliente
   update: async (req, res) => {
     try {
-      // Sua lógica para atualizar os dados do cliente
+      const { id } = req.params;
+      const updatedClient = await Client.findByIdAndUpdate(id, req.body, { new: true });
+      
+      if (!updatedClient) {
+        return res.status(404).json({ error: "Cliente não encontrado" });
+      }
+      
+      res.json({ message: "Cliente atualizado com sucesso", client: updatedClient });
     } catch (error) {
+      console.error("Erro ao atualizar cliente:", error);
       res.status(500).json({ error: "Erro ao atualizar cliente" });
     }
   },
@@ -46,11 +67,19 @@ const clienteController = {
   // Deleta o cliente
   delete: async (req, res) => {
     try {
-      // Sua lógica para deletar o cliente
+      const { id } = req.params;
+      const deletedClient = await Client.findByIdAndDelete(id);
+      
+      if (!deletedClient) {
+        return res.status(404).json({ error: "Cliente não encontrado" });
+      }
+      
+      res.json({ message: "Cliente deletado com sucesso" });
     } catch (error) {
+      console.error("Erro ao deletar cliente:", error);
       res.status(500).json({ error: "Erro ao deletar cliente" });
     }
   }
 };
 
-module.exports = clienteController; // Certifique-se de exportar corretamente
+module.exports = clienteController;

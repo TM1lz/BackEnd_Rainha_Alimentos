@@ -10,6 +10,8 @@ const userRouter = require('./routes/user');
 
 // Middlewares
 app.use(cors());
+app.use(cors({ allowedHeaders: ['Authorization', 'Content-Type'] }));
+
 app.use(express.json());
 connect();
 
