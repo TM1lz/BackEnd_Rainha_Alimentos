@@ -1,9 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/user'); // Importando o controller de usuários
+const userController = require('../controllers/user');
+const { tokenValid } = require('../middleware/authMiddleware');
 
-// Criar usuário
-router.get('/', userController.getAll);
-router.post('/create', userController.create);
+// Rota para verificar a validade do token
+router.get('/validartoken', tokenValid, (req, res) => {
+    res.json({
+        message: 'Token verificado com sucesso',
+        token: res.locals.token, // Retorna o token na resposta
+      });
+});
+
+// Rota de login
 router.post('/login', userController.login);
+
 module.exports = router;
