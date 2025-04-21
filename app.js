@@ -7,6 +7,7 @@ const connect = require('./config/database/connect');
 // Rotas complexas com controllers
 const clienteRouter = require('./routes/cliente');
 const userRouter = require('./routes/user');
+const TuserRouter = require('./routes/Tuser');
 
 // Middlewares
 app.use(cors());
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 });
 
 // Rotas complexas
+app.use('/Tuser', TuserRouter);
 app.use('/user', userRouter);
 app.use('/cliente', clienteRouter);
 
