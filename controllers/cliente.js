@@ -5,21 +5,7 @@ const clienteController = {
   create: async (req, res) => {
     try {
       const { razaoSocial, cpfCnpj, nome, cidade, email, telefone, mensagem } = req.body;
-      if (!razaoSocial || !cpfCnpj || !cidade ) {
-        razaoSocial = "<RAZAO_SOCIAL>";
-        cpfCnpj = "<CPF_CNPJ>";
-        cidade = "<CIDADE>";
-       const newClient = new Client({
-        razaoSocial,
-        cpfCnpj,
-        nome,
-        cidade,
-        email,
-        telefone,
-        mensagem,
-        });
-        await newClient.save();
-      }else{
+
       // Cria um novo cliente
       const newClient = new Client({
         razaoSocial,
@@ -32,7 +18,7 @@ const clienteController = {
       });
 
       await newClient.save(); // Salva o cliente no banco de dados
-    }
+
       res.status(201).json({ message: 'Cliente criado com sucesso', client: newClient });
     } catch (error) {
       console.error("Erro ao criar cliente:", error);

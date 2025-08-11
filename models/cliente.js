@@ -4,33 +4,33 @@ const clientSchema = new mongoose.Schema(
   {
     razaoSocial: {
       type: String,
-      required: true,
+      required: false,
     },
     cpfCnpj: {
       type: String,
-      required: true,
+      required: false,
     },
     nome: {
       type: String,
-      required: true,
+      required: false,
     },
     cidade: {
       type: String,
-      required: true,
+      required: false,
     },
     email: {
       type: String,
-      required: true,
+      required: false,
       lowercase: true,
       match: [/.+\@.+\..+/, "Por favor, insira um email válido"],
     },
     telefone: {
       type: String,
-      required: true,
+      required: false,
     },
     mensagem: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {
